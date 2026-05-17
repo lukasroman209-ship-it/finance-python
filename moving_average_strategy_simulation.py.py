@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 num_of_runs = 100
 
-# STRATEGY SIM
 def run_strategy(
     days = 100,
     window = 3,
@@ -31,13 +30,13 @@ def run_strategy(
         if i < window - 1:
             continue
         avg = sum(prices[i-window+1 : i+1])/window
-        # BUY SIGNAL
+
         if prices[i] > avg and position == 0:
             position = 1
             buy_price = prices[i]
             buy_price_list.append(prices[i])
             buy_day.append(i)
-        # SELL SIGNAL
+            
         elif prices[i] < avg and position == 1:
             position = 0
             sell_price = prices[i]
@@ -49,7 +48,7 @@ def run_strategy(
 
     return buy_price_list, sell_price_list, buy_day, sell_day, prices, cash
 
-# MONTE CARLO DISTRIBUTION
+
 all_pnls = []
 all_prices = []
 
@@ -73,7 +72,7 @@ for i in  range(num_of_runs):
 
 fig, axs = plt.subplots(4, 1, figsize=(10, 12))
 
-# MONTE CARLO
+
 for path in all_prices:
     axs[0].plot(path, alpha=0.5)
 
@@ -81,7 +80,7 @@ axs[0].set_title("MONTE CARLO DISTRIBJUŠN")
 axs[0].set_xlabel("DAYS")
 axs[0].set_ylabel("PRICE")
 
-# EXAMPLE BnS
+
 axs[1].plot(BnS_example)
 axs[1].set_title("1. SIM")
 axs[1].set_xlabel("DAYS")
@@ -89,7 +88,7 @@ axs[1].set_ylabel("PRICE")
 axs[1].scatter(all_buy_days, all_buy_prices, color='green', marker='^', s=25, label='Buy')
 axs[1].scatter(all_sell_days, all_sell_prices, color='red', marker='v', s=25, label='Sell')
 
-# HISTOGRAM
+
 axs[2].hist(all_pnls, bins=50)
 axs[2].set_title("PnL")
 axs[2].set_xlabel("PnL")
@@ -100,7 +99,6 @@ profit_rate = profitable_runs / len(all_pnls)
 mean_pnl = sum(all_pnls) / len(all_pnls)
 
 
-# TEXT
 axs[3].axis("off")
 axs[3].text(
     0.5, 0.5,
