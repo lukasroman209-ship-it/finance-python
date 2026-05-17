@@ -20,7 +20,6 @@ div_df = dividend.reset_index()
 div_df.columns = ["Ex-Date", "Dividend"]
 div_df = div_df.tail()
 
-#Stock Prices Before&After Ex-Dividend Dates
 div_df["Ex-Date"] = pd.to_datetime(div_df["Ex-Date"])
 ex_date = div_df["Ex-Date"].max()
 print("Ex-Dividend Date : ", ex_date.date())
